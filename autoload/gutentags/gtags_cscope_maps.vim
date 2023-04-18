@@ -1,4 +1,4 @@
-" gtags_cscope module for Gutentags
+" gtags_cscope_maps module for Gutentags
 
 if !has('nvim') || !exists(":Cscope")
     throw "Can't enable the gtags-cscope-maps module for Gutentags, this Vim has ".
@@ -25,7 +25,7 @@ endif
 
 let s:runner_exe = gutentags#get_plat_file('update_gtags')
 
-function! gutentags#gtags_cscope#init(project_root) abort
+function! gutentags#gtags_cscope_maps#init(project_root) abort
     let l:db_path = gutentags#get_cachefile(
                 \a:project_root, g:gutentags_gtags_dbpath)
     let l:db_path = gutentags#stripslash(l:db_path)
@@ -36,7 +36,7 @@ function! gutentags#gtags_cscope#init(project_root) abort
         call mkdir(l:db_path, 'p')
     endif
 
-    let b:gutentags_files['gtags_cscope'] = l:db_file
+    let b:gutentags_files['gtags_cscope_maps'] = l:db_file
 
     " The combination of gtags-cscope, vim's cscope and global files is
     " a bit flaky. Environment variables are safer than vim passing
@@ -46,7 +46,7 @@ function! gutentags#gtags_cscope#init(project_root) abort
 
 endfunction
 
-function! gutentags#gtags_cscope#generate(proj_dir, tags_file, gen_opts) abort
+function! gutentags#gtags_cscope_maps#generate(proj_dir, tags_file, gen_opts) abort
     let l:cmd = [s:runner_exe]
     let l:cmd += ['-e', '"' . g:gutentags_gtags_executable . '"']
 
@@ -71,19 +71,19 @@ function! gutentags#gtags_cscope#generate(proj_dir, tags_file, gen_opts) abort
     call gutentags#trace("Running: " . string(l:cmd))
     call gutentags#trace("In:      " . getcwd())
     if !g:gutentags_fake
-        let l:job_opts = gutentags#build_default_job_options('gtags_cscope')
+        let l:job_opts = gutentags#build_default_job_options('gtags_cscope_maps')
         let l:job = gutentags#start_job(l:cmd, l:job_opts)
-        call gutentags#add_job('gtags_cscope', a:tags_file, l:job)
+        call gutentags#add_job('gtags_cscope_maps', a:tags_file, l:job)
     else
         call gutentags#trace("(fake... not actually running)")
     endif
     call gutentags#trace("")
 endfunction
 
-function! gutentags#gtags_cscope#on_job_exit(job, exit_val) abort
-    let l:job_idx = gutentags#find_job_index_by_data('gtags_cscope', a:job)
-    let l:dbfile_path = gutentags#get_job_tags_file('gtags_cscope', l:job_idx)
-    call gutentags#remove_job('gtags_cscope', l:job_idx)
+function! gutentags#gtags_cscope_maps#on_job_exit(job, exit_val) abort
+    let l:job_idx = gutentags#find_job_index_by_data('gtags_cscope_maps', a:job)
+    let l:dbfile_path = gutentags#get_job_tags_file('gtags_cscope_maps', l:job_idx)
+    call gutentags#remove_job('gtags_cscope_maps', l:job_idx)
 
     if a:exit_val != 0 && !g:__gutentags_vim_is_leaving
         call gutentags#warning(
