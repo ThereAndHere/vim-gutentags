@@ -44,7 +44,7 @@ function! gutentags#gtags_cscope_maps#init(project_root) abort
     let $GTAGSDBPATH = l:db_path
     let $GTAGSROOT = a:project_root
     let g:cscope_maps_gtags_root = a:project_root
-    let g:cscope_maps_grags_db_pash = l:db_path
+    let g:cscope_maps_gtags_db_pash = l:db_path
 
 endfunction
 
