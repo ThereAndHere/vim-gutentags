@@ -45,6 +45,7 @@ function! gutentags#gtags_cscope_maps#init(project_root) abort
     let $GTAGSROOT = a:project_root
     let g:cscope_maps_gtags_root = a:project_root
     let g:cscope_maps_gtags_db_path = l:db_path
+    let g:cscope_maps_use_gtags = 1
 
 endfunction
 
@@ -75,7 +76,6 @@ function! gutentags#gtags_cscope_maps#generate(proj_dir, tags_file, gen_opts) ab
     if !g:gutentags_fake
         let l:job_opts = gutentags#build_default_job_options('gtags_cscope_maps')
         let l:job = gutentags#start_job(l:cmd, l:job_opts)
-        let g:cscope_maps_use_gtags = 1
         call gutentags#add_job('gtags_cscope_maps', a:tags_file, l:job)
     else
         call gutentags#trace("(fake... not actually running)")
